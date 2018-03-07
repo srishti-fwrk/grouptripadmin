@@ -680,10 +680,22 @@ class UsersController extends AppController {
             $code = $_POST['code'];
             $user_id = $_POST['user_id'];
             $search = $this->User->find("all", array('conditions' => array('AND'=>array('User.name LIKE' => "$code%",'User.id !=' => $user_id))));
+            $image = array();
+            foreach($search as $data){
+                 if($data['User']['image'] == null){
+                       $data['User']['image'] = null; 
+                  }else if (filter_var($data['User']['image'], FILTER_VALIDATE_URL)) {
+                        
+                    }else{
+                      $data['User']['image'] = FULL_BASE_URL . $this->webroot . "files/profile_pic/" .$data['User']['image']; 
+                  }
+                   
+                $image[]=  $data;
+            }
 
-            if ($search) {
+            if ($image) {
                 $response['status'] = 0;
-                $response['data'] = $search;
+                $response['data'] = $image;
             } else {
                 $response['status'] = 1;
                 $response['msg'] = 'No data available';
