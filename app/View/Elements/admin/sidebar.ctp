@@ -70,7 +70,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="active"><?php echo $this->Html->link('Upcoming Trips', array('controller' => 'trips', 'action' => 'trip', 'admin' => true), array('class' => '')); ?></li>
-                    <li class="active"><?php echo $this->Html->link('Past Trips', array('controller' => 'trips', 'action' => 'trip', 'admin' => true), array('class' => '')); ?></li> 
+                    <li class="active"><?php echo $this->Html->link('Past Trips', array('controller' => 'trips', 'action' => 'pasttrip', 'admin' => true), array('class' => '')); ?></li> 
                 </ul>
             </li> 
             <li class="treeview">

@@ -4,7 +4,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>Upcoming Trips</h1>
+      <h1>Past Trips</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 
@@ -48,7 +48,7 @@
                                             <?php echo $this->Html->link(__(''), array('action' => 'edit', $trips['Trip']['id']), array('class' => 'fa fa-edit btn btn-success')); ?>
                                             <?php echo $this->Html->link(__(''), array('action' => 'view', $trips['Trip']['id']), array('class' => 'fa fa-eye btn btn-info')); ?>
                                             <?php echo $this->Html->link(__(''), array('action' => 'tripgallery', $trips['Trip']['id']), array('class' => 'fa fa-file-image-o btn btn-warning')); ?>
-                                            <?php echo $this->Html->link(__(''), array('action' => 'tripvideo', $trips['Trip']['id']), array('class' => 'fa fa-video-camera btn btn-warning')); ?>
+                                             <?php echo $this->Html->link(__(''), array('action' => 'tripvideo', $trips['Trip']['id']), array('class' => 'fa fa-video-camera btn btn-warning')); ?>
                                            <?php echo $this->Form->postLink(__(''), array('action' => 'delete', $trips['Trip']['id']),array('class' => 'fa fa-trash btn btn-danger'),array('confirm' => __('Are you sure you want to delete # %s?', $trips['Trip']['id']))); ?>
                                         </td>
                                     </tr>
