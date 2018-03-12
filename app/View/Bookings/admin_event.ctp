@@ -21,37 +21,35 @@
                 <thead>
                 <tr>
                     <th><?php echo $this->Paginator->sort('id'); ?></th>
-                    <th><?php echo $this->Paginator->sort('start_date'); ?></th>
-                    <th><?php echo $this->Paginator->sort('last_date'); ?></th>
-                    <th><?php echo $this->Paginator->sort('flight'); ?></th>
-                    <th><?php echo $this->Paginator->sort('children'); ?></th>
-                    <th><?php echo $this->Paginator->sort('adult'); ?></th>
-                    <th><?php echo $this->Paginator->sort('hotel'); ?></th>
-                    <th><?php echo $this->Paginator->sort('start_location'); ?></th>
-                    <th><?php echo $this->Paginator->sort('end_location'); ?></th>
+                    <th><?php echo $this->Paginator->sort('event_type'); ?></th>
+                    <th><?php echo $this->Paginator->sort('a_dd'); ?></th>
+                    <th><?php echo $this->Paginator->sort('d_add'); ?></th>
+                    <th><?php echo $this->Paginator->sort('a_time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('d_time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('note'); ?></th>
+                 
                     
 <!--                    <th><?php echo $this->Paginator->sort('status'); ?></th>-->
                     <th class="actions"><?php echo __('Actions'); ?></th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($bookings as $user): ?>
-                <?php print_r($bookings); ?> die;
+               <?php foreach ($users as $user): ?>
+            
                 
 	<tr>
-		<td><?php echo h($user['Booking']['id']); ?>&nbsp;</td>
-		<td><?php echo h($user['Booking']['start_date']); ?>&nbsp;</td>
-		<td><?php echo h($user['Booking']['last_date']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['flight']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['children']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['adult']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['hotel']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['start_location']); ?>&nbsp;</td>
-                <td><?php echo h($user['Booking']['end_location']); ?>&nbsp;</td>
+		<td><?php echo h($user['Event']['id']); ?>&nbsp;</td>
+		<td><?php echo h($user['Event']['event_type']); ?>&nbsp;</td>
+		<td><?php echo h($user['Event']['a_dd']); ?>&nbsp;</td>
+                <td><?php echo h($user['Event']['d_add']); ?>&nbsp;</td>
+                <td><?php echo h($user['Event']['a_time']); ?>&nbsp;</td>
+                <td><?php echo h($user['Event']['d_time']); ?>&nbsp;</td>
+                <td><?php echo h($user['Event']['note']); ?>&nbsp;</td>
+               
 
 		<td class="actions">
-			<?php echo $this->Html->link(__(''), array('action' => 'view', $user['Booking']['id']), array('class' => 'fa fa-eye btn btn-info')); ?>
-			<?php echo $this->Form->postLink(__(''), array('action' => 'delete', $user['Booking']['id']), array('class' => 'fa fa-trash btn btn-danger'), array('confirm' => __('Are you sure you want to delete # %s?', $user['User']['id']))); ?>
+			<?php echo $this->Html->link(__(''), array('action' => 'eventview', $user['Event']['id']), array('class' => 'fa fa-eye btn btn-info')); ?>
+			<?php echo $this->Form->postLink(__(''), array('action' => 'eventdelete', $user['Event']['id']), array('class' => 'fa fa-trash btn btn-danger'), array('confirm' => __('Are you sure you want to delete # %s?', $user['User']['id']))); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -59,14 +57,12 @@
                 <tfoot>
                 <tr>
                     <th><?php echo $this->Paginator->sort('id'); ?></th>
-                    <th><?php echo $this->Paginator->sort('start_date'); ?></th>
-                    <th><?php echo $this->Paginator->sort('last_date'); ?></th>
-                    <th><?php echo $this->Paginator->sort('flight'); ?></th>
-                    <th><?php echo $this->Paginator->sort('children'); ?></th>
-                    <th><?php echo $this->Paginator->sort('adult'); ?></th>
-                    <th><?php echo $this->Paginator->sort('hotel'); ?></th>
-                    <th><?php echo $this->Paginator->sort('start_location'); ?></th>
-                    <th><?php echo $this->Paginator->sort('end_location'); ?></th>
+                    <th><?php echo $this->Paginator->sort('event_type'); ?></th>
+                    <th><?php echo $this->Paginator->sort('a_dd'); ?></th>
+                    <th><?php echo $this->Paginator->sort('d_add'); ?></th>
+                    <th><?php echo $this->Paginator->sort('a_time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('d_time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('note'); ?></th>
 <!--                    <th><?php echo $this->Paginator->sort('status'); ?></th>-->
                     <th class="actions"><?php echo __('Actions'); ?></th>
                 </tr>

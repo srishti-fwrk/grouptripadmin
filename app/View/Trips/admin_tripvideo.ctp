@@ -1,7 +1,7 @@
 
 <?php echo $this->element('admin/header'); ?>
 <?php echo $this->element('admin/sidebar'); ?>
-<script src="/public_html/grouptrip/app/webroot/js/jquery.media.js"></script>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -21,13 +21,12 @@
             <div class="box-body gallery_pics">
 
            <?php foreach ($gallery as $pics): ?> 
-                <div class="col-sm-3">
-                    <div class="gallery_inner">
-<!--                 <video width="400" controls Autoplay=autoplay>
-  <source src="<?php echo $this->webroot.'files/uservideo/'.$pics['Video']['video']; ?>" type="video/mov">
-                 </video>-->
-<a class="media" href="<?php echo $this->webroot.'files/uservideo/'.$pics['Video']['video']; ?>" type="video/mov">My Audio File</a> 
-                    </div>
+                <div class="col-sm-4">
+
+<video width="320" height="240" controls>
+  <source src="<?php echo $this->webroot.'files/uservideo/'.$pics['Video']['video']; ?>" type="video/mp4">
+  <source src="<?php echo $this->webroot.'files/uservideo/'.$pics['Video']['video']; ?>" type="video/ogg">
+</video>         
           <?php //echo $pics['Gallery']['image']; ?>
 
                 </div>
@@ -64,11 +63,7 @@
 <!-- AdminLTE for demo purposes -->
 <!--<script src="../../dist/js/demo.js"></script>-->
 <!-- page script -->
-<script>
-      $(function () {
-    $('.media').media();
-     })
-</script>
+
 <script>
   $(function () {
     $('#example1').DataTable()

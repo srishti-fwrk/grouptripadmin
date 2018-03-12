@@ -2,44 +2,38 @@
 <?php echo $this->element('admin/sidebar'); ?>
 <div class="content-wrapper" style="padding:0;">
 <section class="content">
-<h3>Upcoming booking</h3>
+<h3>Event</h3>
       <div class="row">
         <div class="col-md-6">
 <div class="box box-primary">
             <div class="box-body box-profile">
                <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Id</b> <a class="pull-right"><?php echo h($user['Booking']['id']); ?></a>
+                  <b>Id</b> <a class="pull-right"><?php echo h($user['Event']['id']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Start date</b> <a class="pull-right"><?php echo ($user['Booking']['start_date']); ?></a>
+                  <b>Event type</b> <a class="pull-right"><?php echo ($user['Event']['event_type']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>End date</b> <a class="pull-right"><?php echo ($user['Booking']['last_date']); ?></a>
+                  <b>Arrival address</b> <a class="pull-right"><?php echo ($user['Event']['a_dd']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Flight</b> <a class="pull-right"><?php echo ($user['Booking']['flight']); ?></a>
+                  <b>Departure address</b> <a class="pull-right"><?php echo ($user['Event']['d_add']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Children</b> <a class="pull-right"><?php echo ($user['Booking']['children']); ?></a>
+                  <b>Arrival time</b> <a class="pull-right"><?php echo ($user['Event']['a_time']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Adult</b> <a class="pull-right"><?php echo ($user['Booking']['adult']); ?></a>
+                  <b>Departure time</b> <a class="pull-right"><?php echo ($user['Event']['d_time']); ?></a>
                 </li>
                   <li class="list-group-item">
-                  <b>Hotel</b> <a class="pull-right"><?php echo ($user['Booking']['hotel']); ?></a>
+                  <b>Note</b> <a class="pull-right"><?php echo ($user['Event']['note']); ?></a>
                 </li>
-                <li class="list-group-item">
-                  <b>Start Location</b> <a class="pull-right"><?php echo ($user['Booking']['start_location']); ?></a>
-                </li>
-                  <li class="list-group-item">
-                  <b>End Location</b> <a class="pull-right"><?php echo ($user['Booking']['end_location']); ?></a>
-                </li>
-                
-                
-                
+            
               </ul>
 
+               <?php echo $this->Html->link('Edit', array('action' => 'edit', $user['Event']['id']), array('class' => 'btn btn-primary')); ?>
+         
             </div>
             <!-- /.box-body -->
           </div>

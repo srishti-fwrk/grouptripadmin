@@ -10,7 +10,7 @@ class BookingsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('api_booking', 'admin_booking', 'admin_view', 'admin_delete', 'api_userbooking', 'api_addevent');
+        $this->Auth->allow('api_booking', 'admin_booking', 'admin_view', 'admin_delete', 'api_userbooking', 'api_addevent','admin_eventdelete','admin_event','admin_view');
     }
 
     public function api_booking() {
@@ -18,7 +18,10 @@ class BookingsController extends AppController {
             $user_id = $this->request->data['user_id'];
             $start_date = $this->request->data['start_date'];
             $last_date = $this->request->data['last_date'];
-            $flight = $this->request->data['flight'];
+            $flight = $this->request->data['flight']; //flight number
+            $airline = $this->request->data['airline'];
+            $arrival_time = $this->request->data['arrival_time'];
+            $departure_time = $this->request->data['departure_time'];
             $children = $this->request->data['children'];
             $adult = $this->request->data['adult'];
             $hotel = $this->request->data['hotel'];
@@ -31,7 +34,7 @@ class BookingsController extends AppController {
                 $savedata = $this->Booking->save($this->request->data);
                 $updates = $this->Booking->getInsertID();
                 $usr_data = $this->Booking->find('first', array('conditions' => array('Booking.id' => $updates)));
-                $response['msg'] = "Booking for trip";
+                $response['msg'] = "Booking is succesfull";
                 $response['status'] = 0;
                 $response['data'] = $usr_data;
             } else {
@@ -190,9 +193,37 @@ class BookingsController extends AppController {
         exit;
     }
 
-    public function admin_event() {
+ 
+      public function admin_event() {
+        $this->loadModel('Event');
         $this->Event->recursive = 0;
-        $this->set('bookings', $this->Paginator->paginate());
+        $this->set('users', $this->Paginator->paginate('Event'));
+        
+        //$this->set(compact(array('users')));
+    }
+       public function admin_eventdelete($id = null) {
+            $this->loadModel('Event');
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->Event->id = $id;
+        if (!$this->Event->exists()) {
+            throw new NotFoundException('Invalid user');
+        }
+        if ($this->Event->delete()) {
+            $this->Session->setFlash('Event deleted');
+            return $this->redirect(array('action' => 'event'));
+        }
+        $this->Session->setFlash('Something went wrong');
+        return $this->redirect(array('action' => 'event'));
+    }
+      public function admin_eventview($id = null) {
+        configure::write("debug", 0);
+        $this->Event->id = $id;
+        if (!$this->Event->exists()) {
+            throw new NotFoundException('Invalid user');
+        }
+        $this->set('user', $this->Event->read(null, $id));
     }
 
 }
