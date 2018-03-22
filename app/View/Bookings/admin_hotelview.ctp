@@ -2,48 +2,40 @@
 <?php echo $this->element('admin/sidebar'); ?>
 <div class="content-wrapper" style="padding:0;">
 <section class="content">
-<h3>Flight detail</h3>
+<h3>Hotel detail</h3>
       <div class="row">
         <div class="col-md-6">
 <div class="box box-primary">
             <div class="box-body box-profile">
                <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Id</b> <a class="pull-right"><?php echo h($user['Booking']['id']); ?></a>
+                  <b>Id</b> <a class="pull-right"><?php echo h($user['Hotel_booking']['id']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Start date</b> <a class="pull-right"><?php echo ($user['Booking']['start_date']); ?></a>
+                  <b>Amount</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['price']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>End date</b> <a class="pull-right"><?php echo ($user['Booking']['last_date']); ?></a>
+                  <b>Hotel name</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['hname']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Flight no</b> <a class="pull-right"><?php echo ($user['Booking']['flight']); ?></a>
+                  <b>Check out</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['check_in']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Amount</b> <a class="pull-right"><?php echo ($user['Booking']['amount']); ?></a>
+                  <b>Check out</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['check_out']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Airline</b> <a class="pull-right"><?php echo ($user['Booking']['airline']); ?></a>
+                  <b>Rooms</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['rooms']); ?></a>
                 </li>
                   <li class="list-group-item">
-                  <b>Arrival time</b> <a class="pull-right"><?php echo ($user['Booking']['arrival_time']); ?></a>
+                  <b>City</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['city']); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Departure time</b> <a class="pull-right"><?php echo ($user['Booking']['departure_time']); ?></a>
+                  <b>Status</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['status']); ?></a>
                 </li>
                   <li class="list-group-item">
-                  <b>Start Location</b> <a class="pull-right"><?php echo ($user['Booking']['start_location']); ?></a>
+                  <b>Booking Id</b> <a class="pull-right"><?php echo ($user['Hotel_booking']['booking_id']); ?></a>
                 </li>
-                 <li class="list-group-item">
-                  <b>End Location</b> <a class="pull-right"><?php echo ($user['Booking']['end_location']); ?></a>
-                </li>
-                   <li class="list-group-item">
-                  <b>Booking Id</b> <a class="pull-right"><?php echo ($user['Booking']['booking_id']); ?></a>
-                </li>
-                   <li class="list-group-item">
-                  <b>Status</b> <a class="pull-right"><?php echo ($user['Booking']['status']); ?></a>
-                </li>
+               
                 
                 
                 

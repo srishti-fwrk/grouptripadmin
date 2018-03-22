@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Upcoming Booking
+       Past 
       </h1>
   
     </section>
@@ -21,14 +21,16 @@
                 <thead>
                 <tr>
                     <th><?php echo $this->Paginator->sort('id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Start date'); ?></th>
+                    <th><?php echo $this->Paginator->sort('End date'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Flight no'); ?></th>
                     <th><?php echo $this->Paginator->sort('Amount'); ?></th>
-                    <th><?php echo $this->Paginator->sort('hname'); ?></th>
-                    <th><?php echo $this->Paginator->sort('check_in'); ?></th>
-                    <th><?php echo $this->Paginator->sort('check_out'); ?></th>
-                    <th><?php echo $this->Paginator->sort('rooms'); ?></th>
-                    <th><?php echo $this->Paginator->sort('city'); ?></th>
-                    <th><?php echo $this->Paginator->sort('status'); ?></th>
-                    <th><?php echo $this->Paginator->sort('booking_id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Airline'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Arrival time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('End location'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Status'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Booking id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Amount'); ?></th>
                     <th class="actions"><?php echo __('Actions'); ?></th>
                 </tr>
                 </thead>
@@ -36,18 +38,21 @@
                 <?php foreach ($bookings as $user): ?>
                 
 	<tr>
-		<td><?php echo h($user['Hotel_booking']['id']); ?>&nbsp;</td>
-		<td><?php echo h($user['Hotel_booking']['price']); ?>&nbsp;</td>
-		<td><?php echo h($user['Hotel_booking']['hname']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['check_in']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['check_out']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['rooms']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['city']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['status']); ?>&nbsp;</td>
-                <td><?php echo h($user['Hotel_booking']['booking_id']); ?>&nbsp;</td>
+		<td><?php echo h($user['Booking']['id']); ?>&nbsp;</td>
+		<td><?php echo h($user['Booking']['start_date']); ?>&nbsp;</td>
+		<td><?php echo h($user['Booking']['last_date']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['flight']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['amount']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['airline']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['arrival_time']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['departure_time']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['start_location']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['end_location']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['status']); ?>&nbsp;</td>
+                <td><?php echo h($user['Booking']['booking_id']); ?>&nbsp;</td>
           	<td class="actions">
-			<?php echo $this->Html->link(__(''), array('action' => 'hotelview', $user['Hotel_booking']['id']), array('class' => 'fa fa-eye btn btn-info')); ?>
-			
+			<?php echo $this->Html->link(__(''), array('action' => 'view', $user['Booking']['id']), array('class' => 'fa fa-eye btn btn-info')); ?>
+		
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -55,15 +60,16 @@
                 <tfoot>
                 <tr>
                     <th><?php echo $this->Paginator->sort('id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Start date'); ?></th>
+                    <th><?php echo $this->Paginator->sort('End date'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Flight no'); ?></th>
                     <th><?php echo $this->Paginator->sort('Amount'); ?></th>
-                    <th><?php echo $this->Paginator->sort('hotel name'); ?></th>
-                    <th><?php echo $this->Paginator->sort('check_in'); ?></th>
-                    <th><?php echo $this->Paginator->sort('check_out'); ?></th>
-                  
-                    <th><?php echo $this->Paginator->sort('rooms'); ?></th>
-                    <th><?php echo $this->Paginator->sort('city'); ?></th>
-                    <th><?php echo $this->Paginator->sort('status'); ?></th>
-                   <th><?php echo $this->Paginator->sort('booking_id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Airline'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Arrival time'); ?></th>
+                    <th><?php echo $this->Paginator->sort('End location'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Status'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Booking id'); ?></th>
+                    <th><?php echo $this->Paginator->sort('Amount'); ?></th>
                     <th class="actions"><?php echo __('Actions'); ?></th>
                 </tr>
                 </tfoot>

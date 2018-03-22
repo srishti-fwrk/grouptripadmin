@@ -10,8 +10,7 @@ class TripsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('api_tripadd', 'api_upcomingtrip', 'admin_edit', 'api_singletrip', 'admin_tripgallery', 'admin_view', 'admin_deleteimage', 'api_edittrip', 'api_tripimage',
-                'api_pasttrip', 'api_tripcount', 'api_step1', 'api_step2', 'api_step3', 'api_step4', 'api_step5', 'api_step6', 'api_writefile', 'api_recenttravelfrd', 'admin_pasttrip','api_addanotherlocation','admin_tripvideo');
+        $this->Auth->allow('api_tripadd', 'api_upcomingtrip', 'admin_edit', 'api_singletrip', 'admin_tripgallery', 'admin_view', 'admin_deleteimage', 'api_edittrip', 'api_tripimage', 'api_pasttrip', 'api_tripcount', 'api_step1', 'api_step2', 'api_step3', 'api_writefile', 'api_recenttravelfrd', 'admin_pasttrip', 'api_addanotherlocation', 'admin_tripvideo');
     }
 
     public function api_tripadd() {
@@ -55,16 +54,16 @@ class TripsController extends AppController {
         echo json_encode($response);
         exit;
     }
-    
-      public function api_addanotherlocation() {
-         $this->loadModel('Another_location');
+
+    public function api_addanotherlocation() {
+        $this->loadModel('Another_location');
         $this->request->data['Another_location']['user_id'] = $this->request->data['user_id']; //userid
         $this->request->data['Another_location']['trip_id'] = $this->request->data['trip_id'];
         $this->request->data['Another_location']['trip_startdate'] = $this->request->data['trip_startdate'];
         $this->request->data['Another_location']['trip_enddate'] = $this->request->data['trip_enddate'];
         $this->request->data['Another_location']['start_location'] = $this->request->data['start_location'];
         $this->request->data['Another_location']['end_location'] = $this->request->data['end_location'];
-       
+
         if ($this->request->is('post')) {
 
             if (!empty($this->request->data['user_id'])) {
@@ -151,7 +150,7 @@ class TripsController extends AppController {
                 $tripdata[] = $trip;
             }
         }
-       // echo '<pre>';print_r($tripdata);die;
+        // echo '<pre>';print_r($tripdata);die;
         $this->set('trip', $tripdata);
     }
 
@@ -228,7 +227,8 @@ class TripsController extends AppController {
         $gallery = $this->Gallery->find('all', array('conditions' => array('Gallery.trip_id' => $trip_id)));
         $this->set('gallery', $gallery);
     }
-       public function admin_tripvideo($trip_id = null) {
+
+    public function admin_tripvideo($trip_id = null) {
         $this->loadModel('Video');
         $gallery = $this->Video->find('all', array('conditions' => array('Video.trip_id' => $trip_id)));
         $this->set('gallery', $gallery);
@@ -406,146 +406,105 @@ class TripsController extends AppController {
     }
 
     public function api_step1() {
-        $ch = curl_init();
+        $curl = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/cardproducts");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"start_date\": \"2016-01-01\",\n  \"name\": \"Example Card Product\",\n  \"config\": {\n    \"fulfillment\": {\n      \"payment_instrument\":\"VIRTUAL_PAN\"\n     },\n    \"poi\": {\n      \"ecommerce\": true\n    },\n    \"card_life_cycle\": {\n      \"activate_upon_issue\": true\n    }\n  }\n}");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://sandbox.dwolla.com/oauth/v2/token",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "client_id=6F2klb8i6egtpWjgPgML40qJdgZDHuvqzKiCYtylV9UwyF9u2G&client_secret=DIcDgl8WCx7RjROLMZOVwN7LEYyBKivLuP5yWS6QcD80VMFepg&grant_type=client_credentials",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+                "postman-token: 1b3aee4f-2a5d-f132-a393-91a55c6f2ba0"
+            ),
+        ));
 
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $response = curl_exec($curl);
 
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
         }
-        curl_close($ch);
-    }
-
-    public function api_step2() {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/fundingsources/program");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"name\": \"Program Funding\" }");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
-
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-    }
-
-    public function api_step3() {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/users");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"first_name\": \"Leonie\", \"last_name\": \"Crooks\", \"active\": true }");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-
-        echo json_encode($response);
         exit;
     }
 
-    public function api_step4() {
-        $ch = curl_init();
+    public function api_step2() {//create customer
 
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/cards?show_cvv_number=true&show_pan=true");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"user_token\": \"bfe98e29-33d3-4d3b-b1b3-0241506df607\",\"card_product_token\": \"beb89e28-7970-4a97-84ad-bd019dd54fd4\"}");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
+        $curl = curl_init();
 
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api-sandbox.dwolla.com/customers",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{\r\n\"firstName\" : \"Isha\"\r\n  \"lastName\" : \"Doe\"\r\n  \"email\" : \"rahulsharma@nomail.net\"\r\n  \"type\" : \"personal\"\r\n  \"address1\" : \"99-99 33rd St\"\r\n  \"city\" : \"Some City\"\r\n  \"state\" : \"NY\"\r\n  \"postalCode\" : 11101,\r\n  \"dateOfBirth\" : \"1970-01-01\"\r\n  \"ssn\" : 1234\r\n}",
+            CURLOPT_HTTPHEADER => array(
+                "accept: application/vnd.dwolla.v1.hal+json",
+                "authorization: bearer lxu8Ru4ARMbe34F193vEqGpyAVWxELgtmeVlOEqTOY4tjMmamT",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "postman-token: 860fa353-bba7-55bf-fb1b-d493f9a1e49c"
+            ),
+        ));
 
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        $response = curl_exec($curl);
+        print_r($response);die;
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
         }
-        curl_close($ch);
-        echo json_encode($response);
         exit;
     }
+    
+    public function api_step3(){
+        $curl = curl_init();
 
-    public function api_step5() {
-        $ch = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api-sandbox.dwolla.com/customers",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "accept: application/vnd.dwolla.v1.hal+json",
+                "authorization: bearer lxu8Ru4ARMbe34F193vEqGpyAVWxELgtmeVlOEqTOY4tjMmamT",
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "postman-token: 00ca4f3a-be42-3f81-b0d7-c371f219650b"
+            ),
+        ));
 
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/gpaorders");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"user_token\": \"bfe98e29-33d3-4d3b-b1b3-0241506df607\",\"amount\": \"1000\", \"currency_code\": \"USD\",\"funding_source_token\": \"94976c40-ced4-4da1-bcac-2ad7b1c93fde\" }");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_close($curl);
 
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+            
         }
-        curl_close($ch);
-    }
-
-    public function api_step6() {  //step4 token
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, "https://shared-sandbox-api.marqeta.com/v3/simulate/authorization");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{     \"amount\": \"10\",     \"mid\": \"123456890\",     \"card_token\": \"32a414db-2be6-4618-9000-2cdef1567f7b\",     \"webhook\": {       \"endpoint\": \"http://rakesh.crystalbiltech.com/grouptrip/api/trips/writefile\",       \"username\": \"user27811519650593\",       \"password\": \"e3d323d1-0903-468c-aa1e-f62caf288ba1\"     } }");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, "user27811519650593" . ":" . "e3d323d1-0903-468c-aa1e-f62caf288ba1");
-
-        $headers = array();
-        $headers[] = "Content-Type: application/json";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        print_r($result);
-        die;
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-    }
-
-    public function api_writefile() {
-        $data = $_REQUEST;
-        $path = $_SERVER['DOCUMENT_ROOT'] . '/gurpreet.txt';
-        $f = fopen($path, "a+");
-        fwrite($f, print_r($data, TRUE));
-        fclose($f);
-        chmod($path, 0777);
         exit;
     }
 

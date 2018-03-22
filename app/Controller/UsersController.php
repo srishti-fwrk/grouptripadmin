@@ -10,7 +10,10 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('api_registration', 'forgetpwd', 'reset', 'api_login', 'api_fblogin', 'admin_add', 'admin_delete', 'api_changepassword', 'api_forgetpwd', 'resetpassword', 'api_googlelogin', 'api_editprofile', 'api_user', 'api_resetpassword', 'api_saveimage', 'admin_login', 'registration', 'admin_view', 'api_userlisting', 'api_namesearch', 'api_airportcode', 'api_countrycode', 'api_countrysearch', 'api_currencycode','api_country');
+        $this->Auth->allow('api_registration', 'forgetpwd', 'reset', 'api_login', 'api_fblogin', 'admin_add', 'admin_delete',
+                'api_changepassword', 'api_forgetpwd', 'resetpassword', 'api_googlelogin', 'api_editprofile', 'api_user', 'api_resetpassword', 
+                'api_saveimage', 'admin_login', 'registration', 'admin_view', 'api_userlisting', 'api_namesearch', 'api_airportcode', 'api_countrycode',
+                'api_countrysearch', 'api_currencycode', 'api_country','api_phone_code','api_phonecode');
     }
 
     public function api_registration() {
@@ -22,18 +25,18 @@ class UsersController extends AppController {
             $this->request->data['User']['tokenid'] = $this->request->data['tokenid'];
             $this->request->data['User']['role'] = 'customer';
             $this->request->data['User']['status'] = 1;
-           
+
             if ($this->User->hasAny(array('User.email' => $this->request->data['User']['email']))) {
                 $response['msg'] = 'Email already exist';
                 $response['status'] = 1;
             } else {
-                 $this->User->create();
-                 $savedata = $this->User->save($this->request->data);
-                 $updates = $this->User->getInsertID();
-                 $usr_data = $this->User->find('first', array('conditions' => array('User.id' => $updates)));
-                 $response['data'] = $this->request->data;
-                 $response['msg'] = 'User successfully registered';
-                 $response['status'] = 0;
+                $this->User->create();
+                $savedata = $this->User->save($this->request->data);
+                $updates = $this->User->getInsertID();
+                $usr_data = $this->User->find('first', array('conditions' => array('User.id' => $updates)));
+                $response['data'] = $this->request->data;
+                $response['msg'] = 'User successfully registered';
+                $response['status'] = 0;
             }
         } else {
             $response['status'] = 1;
@@ -679,18 +682,18 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             $code = $_POST['code'];
             $user_id = $_POST['user_id'];
-            $search = $this->User->find("all", array('conditions' => array('AND'=>array('User.name LIKE' => "$code%",'User.id !=' => $user_id))));
+            $search = $this->User->find("all", array('conditions' => array('AND' => array('User.name LIKE' => "$code%", 'User.id !=' => $user_id))));
             $image = array();
-            foreach($search as $data){
-                 if($data['User']['image'] == null){
-                       $data['User']['image'] = null; 
-                  }else if (filter_var($data['User']['image'], FILTER_VALIDATE_URL)) {
-                        
-                    }else{
-                      $data['User']['image'] = FULL_BASE_URL . $this->webroot . "files/profile_pic/" .$data['User']['image']; 
-                  }
-                   
-                $image[]=  $data;
+            foreach ($search as $data) {
+                if ($data['User']['image'] == null) {
+                    $data['User']['image'] = null;
+                } else if (filter_var($data['User']['image'], FILTER_VALIDATE_URL)) {
+                    
+                } else {
+                    $data['User']['image'] = FULL_BASE_URL . $this->webroot . "files/profile_pic/" . $data['User']['image'];
+                }
+
+                $image[] = $data;
             }
 
             if ($image) {
@@ -714,20 +717,17 @@ class UsersController extends AppController {
         $this->loadModel('Airportcode');
         if ($this->request->is('post')) {
             $city = $this->request->data['city'];  //send city name
-            
-         
-            if ($city ) {
-                $cityname = $this->Airportcode->find("all", array('conditions' => array('Airportcode.city LIKE' => "$city%")));
-                if(!empty($cityname)){
-                  $response['status'] = 0;
-                  $response['data'] = $cityname;
-                }else{
-                     $response['status'] = 1;
-                     $response['msg'] = 'Something going wronge';
-                }
-                         
 
-                
+
+            if ($city) {
+                $cityname = $this->Airportcode->find("all", array('conditions' => array('Airportcode.city LIKE' => "$city%")));
+                if (!empty($cityname)) {
+                    $response['status'] = 0;
+                    $response['data'] = $cityname;
+                } else {
+                    $response['status'] = 1;
+                    $response['msg'] = 'Something going wronge';
+                }
             } else {
                 $response['status'] = 1;
                 $response['msg'] = 'Something missing';
@@ -788,7 +788,7 @@ class UsersController extends AppController {
             $code = $_POST['code']; //search with country name
 
             $search = $this->Currencycode->find("all", array('conditions' => array('Currencycode.country_name LIKE' => "$code%")));
-         if ($search) {
+            if ($search) {
                 $response['status'] = 0;
                 $response['data'] = $search;
             } else {
@@ -803,25 +803,63 @@ class UsersController extends AppController {
 
         exit;
     }
-    
-    public function api_country(){
-       $this->loadModel('Country');
+
+    public function api_country() {
+        $this->loadModel('Country');
         $country = $this->Country->find("all");
-        if($country){
+        if ($country) {
             $response['data'] = $country;
             $response['status'] = 0;
             $response['msg'] = "Counrty listing";
-        }
-        else{
+        } else {
             $response['status'] = 1;
             $response['msg'] = "No data available";
         }
-          echo json_encode($response);
+        echo json_encode($response);
+
+        exit;
+    }
+
+    public function api_phone_code() {
+        $this->loadModel('Phonecode');
+        $country = $this->Phonecode->find("all");
+        if ($country) {
+            $response['data'] = $country;
+            $response['status'] = 0;
+            $response['msg'] = "Counrty listing";
+        } else {
+            $response['status'] = 1;
+            $response['msg'] = "No data available";
+        }
+        echo json_encode($response);
 
         exit;
     }
     
+    public function api_phonecode(){
+          $this->loadModel('Phonecode');
+       if($this->request->is('post')){
+           $code = $this->request->data['code'];
+           if($code){
+               $data = $this->Phonecode->find("first", array('conditions' => array('Phonecode.nicename' => $code)));
+               if($data){
+                    $response['data'] = $data;
+                    $response['status'] = 0;
+                    $response['msg'] = "Phone code";
+               }else{
+                     $response['status'] = 1;
+                     $response['msg'] = "No data available";
+               }
+           }
+            
+        }else{
+             $response['status'] = 1;
+             $response['msg'] = "Something going wrong";
+        }
+           echo json_encode($response);
 
+        exit;
+    }
 
 }
 

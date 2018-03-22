@@ -75,16 +75,28 @@
             </li> 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-ticket"></i> <span>Booking</span>
+                    <i class="fa fa-bed"></i> <span>Hotel Booking</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><?php echo $this->Html->link('Upcoming Booking', array('controller' => 'bookings', 'action' => 'booking', 'admin' => true), array('class' => '')); ?></li>
-                    <li class="active"><?php echo $this->Html->link('Past Booking', array('controller' => 'bookings', 'action' => 'booking', 'admin' => true), array('class' => '')); ?></li>
+                    <li class="active"><?php echo $this->Html->link('Upcoming ', array('controller' => 'bookings', 'action' => 'booking', 'admin' => true), array('class' => '')); ?></li>
+                    <li class="active"><?php echo $this->Html->link('Past ', array('controller' => 'bookings', 'action' => 'pastbooking', 'admin' => true), array('class' => '')); ?></li>
                 </ul>
             </li> 
+                     <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-plane"></i> <span>Flight Booking</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active"><?php echo $this->Html->link('Upcoming ', array('controller' => 'bookings', 'action' => 'flightupcoming', 'admin' => true), array('class' => '')); ?></li>
+                    <li class="active"><?php echo $this->Html->link('Past ', array('controller' => 'bookings', 'action' => 'pastflight', 'admin' => true), array('class' => '')); ?></li>
+                </ul>
+            </li>
                 <li class="treeview">
                 <a href="#">
                     <i class="fa fa-address-book-o"></i> <span>Event</span>

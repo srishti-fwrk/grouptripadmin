@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Upcoming Booking
+       Past Booking
       </h1>
   
     </section>
